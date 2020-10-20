@@ -7,31 +7,39 @@ from django.core.mail import send_mail
 
 from .models import Post,Comment
 from .forms import EmailPostForm, CommentForm
-
-# def post_list(request):
-#     data = Post.published.all()
-#     paginator = Paginator(data, 3) # 3 posts in each page
-#     page = request.GET.get('page')
-#     try:
-#         posts = paginator.page(page)
-#     except PageNotAnInteger:
-#         #if page is not an integer deliver the first page
-#         posts = paginator.page(1)
-#     except EmptyPage:
-#         # If page is out of range deleiver last page of results
-#         posts = paginator.page(paginator.num_pages)
-#     return render(request,
-#                   'blog/post/list.html',
-#                   {'posts': posts,
-#                    'page': page})
+from taggit.models import Tag
 
 
+def post_list(request, tag_slug=None):
+    data = Post.published.all()
+    tag = None
+    
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        data = data.filter(tags__in=[tag])
+    paginator = Paginator(data, 3) # 3 posts in each page
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        #if page is not an integer deliver the first page
+        posts = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range deleiver last page of results
+        posts = paginator.page(paginator.num_pages)
+    return render(request,
+                  'blog/post/list.html',
+                  {'posts': posts,
+                   'page': page,
+                   'tag': tag})
 
-class PostListView(ListView):
-    queryset = Post.published.all()
-    context_object_name = 'posts'
-    paginate_by = 3
-    template_name = 'blog/post/list.html'
+
+
+# class PostListView(ListView):
+#     queryset = Post.published.all()
+#     context_object_name = 'posts'
+#     paginate_by = 3
+#     template_name = 'blog/post/list.html'
 
 def post_detail(request, year, month, day, post):
     post = get_object_or_404(Post, slug=post,
