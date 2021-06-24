@@ -19,3 +19,4 @@ class SearchForm(forms.Form):
 
 class MyClass(form.Form):
     name = forms.CharField()
+    password = forms.PasswordInput()
