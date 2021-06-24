@@ -22,3 +22,7 @@ class MyClass(form.Form):
     password = forms.PasswordInput()
     class Meta:
         pass
+
+
+class MyForm(forms.Form):
+    passs
