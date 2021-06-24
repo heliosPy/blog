@@ -29,7 +29,7 @@ SITE_ID = 1
 
 ALLOWED_HOSTS = []
 
-
+USER_NAME_SRINATH = None
 # Application definition
 
 INSTALLED_APPS = [
