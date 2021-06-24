@@ -28,3 +28,6 @@ urlpatterns = [
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
          name='django.contrib.sitesmaps.views.sitemap')
 ]
+
+
+stalic_mot_set = None
