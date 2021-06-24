@@ -28,7 +28,7 @@ DEBUG = True
 SITE_ID = 1
 
 ALLOWED_HOSTS = []
-
+DELOYED = None
 USER_NAME_SRINATH = None
 # Application definition
 
